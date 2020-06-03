@@ -1,16 +1,15 @@
 const passport= require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const config = require('config')
-const google = config.get('google')
 const mongoose = require('mongoose');
 const User = require('../models/usermodel')
+require('dotenv').config()
 
 // console.log(google.clientId)
 
 passport.use(new GoogleStrategy({
-    clientID: google.clientId,
-    clientSecret: google.clientsecret,
-    callbackURL: "/auth/google/redirect"
+    clientID: process.env.GOOGLE_CLIENTID,
+    clientSecret: process.env.GOOGLE_CLIENTSECRET,
+    callbackURL: "http://localhost:5000/auth/google/callback"
   },
   async  function(accessToken, refreshToken, profile, done) {
 
@@ -26,6 +25,7 @@ passport.use(new GoogleStrategy({
         const nuser = await new User ({
             name:profile.displayName,
             googleId:profile.id,
+            email:profile.emails[0].value
         }).save()
         console.log(profile)
         done(null ,nuser)
