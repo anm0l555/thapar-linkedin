@@ -1,7 +1,5 @@
 <div align = "center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 
 <img height=200px src= "https://files.hubhopper.com/podcast/135937/nerdy-by-nature.jpg">
 
@@ -22,7 +20,10 @@
 
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/developer-student-club-thapar/slack-bots/blob/master/.pre-commit-config.yaml)
 [![License](https://img.shields.io/github/license/developer-student-club-thapar/slack-bots)](hhttps://github.com/developer-student-club-thapar/slack-bots/blob/master/LICENSE)
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 </div>
 
 ------------
