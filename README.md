@@ -2,6 +2,7 @@
 
 <img height=200px src= "https://files.hubhopper.com/podcast/135937/nerdy-by-nature.jpg">
 
+</div>
 <h1>DECODE25</h1>
 
 <a href=""><img src="https://github.com/aritraroy/social-icons/blob/master/medium-icon.png?raw=true" width="60"></a>
