@@ -13,13 +13,10 @@
 <a href=""><img src="https://github.com/aritraroy/social-icons/blob/master/instagram-icon.png?raw=true" width="60"></a>
 
 # NERDY
-[![GitHub issues](https://img.shields.io/github/issues/developer-student-club-thapar/slack-bots?logo=github)](https://github.com/developer-student-club-thapar/slack-bots/issues)
+[![GitHub issues](https://img.shields.io/github/issues/developer-student-club-thapar/slack-bots?logo=github)](https://github.com/DECODE25/nerdy/issues)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![GitHub repo size](https://img.shields.io/github/repo-size/developer-student-club-thapar/slack-bots)
+![GitHub repo size](https://img.shields.io/github/repo-size/DECODE25/nerdy)
 <a> <img src="https://badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot" alt="Dependabot Badge"></a>
-
-[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/developer-student-club-thapar/slack-bots/blob/master/.pre-commit-config.yaml)
-[![License](https://img.shields.io/github/license/developer-student-club-thapar/slack-bots)](hhttps://github.com/developer-student-club-thapar/slack-bots/blob/master/LICENSE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
