@@ -1,14 +1,13 @@
 const express = require('express')
 const connectDB = require('./config/db')
 const passport=require('passport')
+const cors = require('cors')
 const authRoutes = require('./routes/authroute')
 const passportSetup=require('./config/passportsetup')
-const mongoose= require('mongoose')
 const cookieSession= require('cookie-session')
-const config=require('config')
-
 const app= express();
-
+require('dotenv').config()
+app.use(cors())
 connectDB();
 
 // define middleware
@@ -16,7 +15,7 @@ app.use(express.json({extended:false}));
 
 app.use(cookieSession({
     maxAge:24*60*60*1000 ,
-    keys:[config.get('cookieKey')]
+    keys:[`${process.env.COOKIEKEY}`]
 }))
 
 
@@ -24,7 +23,6 @@ app.use(cookieSession({
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 //define routes
