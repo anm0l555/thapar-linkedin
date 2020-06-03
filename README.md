@@ -2,7 +2,7 @@
 
 <img height=200px src= "https://files.hubhopper.com/podcast/135937/nerdy-by-nature.jpg">
 
-</div>
+
 <h1>DECODE25</h1>
 
 <a href=""><img src="https://github.com/aritraroy/social-icons/blob/master/medium-icon.png?raw=true" width="60"></a>
@@ -20,7 +20,7 @@
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/developer-student-club-thapar/slack-bots/blob/master/.pre-commit-config.yaml)
 [![License](https://img.shields.io/github/license/developer-student-club-thapar/slack-bots)](hhttps://github.com/developer-student-club-thapar/slack-bots/blob/master/LICENSE)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-
+</div>
 
 ------------
 
