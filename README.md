@@ -1,4 +1,7 @@
 <div align = "center">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <img height=200px src= "https://files.hubhopper.com/podcast/135937/nerdy-by-nature.jpg">
 
@@ -60,6 +63,18 @@ We follow a systematic Git Workflow -
 ## Contributors ✨
 
 Thanks goes to these wonderful people for helping us with the project! :
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/specter25"><img src="https://avatars1.githubusercontent.com/u/56391382?v=4" width="100px;" alt=""/><br /><sub><b>Ujjwal Agarwal</b></sub></a><br /><a href="#infra-specter25" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/DECODE25/nerdy/commits?author=specter25" title="Tests">⚠️</a> <a href="#projectManagement-specter25" title="Project Management">📆</a> <a href="https://github.com/DECODE25/nerdy/commits?author=specter25" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
 
