@@ -4,6 +4,8 @@ const passport=require('passport')
 const cors = require('cors')
 const authRoutes = require('./routes/authroute')
 const passportSetup=require('./config/passportsetup')
+//Fb passport setup
+const passportSetupFB=require('./config/passportsetupFB');
 const cookieSession= require('cookie-session')
 const app= express();
 require('dotenv').config()
