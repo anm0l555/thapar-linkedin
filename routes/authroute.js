@@ -34,4 +34,15 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
     res.redirect('/auth/good');
   }
 );
+
+//Fbauth routes
+//login with fb
+router.get('/facebook', passport.authenticate('facebook',{scope:['email']}));
+//callback raoute after user allows permisiion to access data
+router.get('/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }),(req,res)=>{
+    res.send('logged in using fb: '+req.user.name);
+})
+
+
+
 module.exports = router;
