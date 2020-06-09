@@ -6,10 +6,10 @@ const Confession = require('../models/confessionModel');
 
 const router=express.Router();
 
-//@route  Post /api/posts
+//@route  Confess /api/confess
 //@access Private
-//@desc   Create a post
-router.post('/',[auth,[
+//@desc   Create a confession
+router.post('/',[isLoggedIn,[
   check('text','Text is required').not().isEmpty()
   ]],async(req,res)=>{
   const errors=validationResult(req);
@@ -18,16 +18,14 @@ router.post('/',[auth,[
     return res.status(400).json({errors:errors.array()});
   }
   try{
-  const user=await User.findById(req.user.id).select('-password');
-  const newPost=new Post({
-    foi:user.foi,                                                                               //
+  const user=await User.findById(req.user.id);//.select('-password');
+  const newConfession=new Confession({                         //                                                   
     text:req.body.text,
     name:user.name,
-    avatar:user.avatar,
-    user:user._id
+    user:req.user.id
   })
-  await newPost.save();
-  res.json(newPost);
+  await newConfession.save();
+  res.json(newConfession);
   }catch(err){
     console.error(err);
     res.status(500).send('Server Error');
@@ -35,13 +33,13 @@ router.post('/',[auth,[
 })
 
 //@access Private
-//@route  Get /api/posts
-//@desc   Retrieve all posts
-router.get('/',auth,async(req,res)=>{
+//@route  Get /api/confess
+//@desc   Retrieve all confessions
+router.get('/',isLoggedIn,async(req,res)=>{
   try{
-    const user=await User.findById(req.user.id).select('-password');                             //
-    const posts=await Post.find({foi:user.foi}).sort({date:-1});                                 //
-    res.json(posts);
+    const user=await User.findById(req.user.id);                             //
+    const confessions=await Confession.find().sort({date:-1});                                 //
+    res.json(confessions);
   }catch(err){
     console.error(err);
     res.status(500).send('Server Error');
@@ -49,16 +47,16 @@ router.get('/',auth,async(req,res)=>{
 })
 
 //@access Private
-//@desc  Get posts by id
-//@route Get /api/posts/:id
-router.get('/:id',auth,async(req,res)=>{
+//@desc  Get confessions by id
+//@route Get /api/confess/:id
+router.get('/:id',isLoggedIn,async(req,res)=>{
   try{
-    const post=await Post.findById(req.params.id);
-    if(!post)
+    const confession=await Confession.findById(req.params.id);
+    if(!confession)
     {
       return res.status(404).json({msg:'No post found'});
     }
-    res.json(post);
+    res.json(confession);
   }catch(err){
     console.error(err);
     if(err.kind==='ObjectId')
@@ -70,21 +68,21 @@ router.get('/:id',auth,async(req,res)=>{
 })
 
 //@access Private
-//@desc Delete post using its id
-//@@route Delete /api/posts/:id
-router.delete('/:id',auth,async(req,res)=>{
+//@desc Delete confession using its id
+//@@route Delete /api/confess/:id
+router.delete('/:id',isLoggedIn,async(req,res)=>{
   try{
-    const post=await Post.findById(req.params.id);
-    if(!post)
+    const confession=await Confession.findById(req.params.id);
+    if(!confession)
     {
       return res.status(404).json({msg:'No post found'});
     }
-    if(post.user.toString()!==req.user.id)
+    if(confession.user.toString()!==req.user.id)
     {
       return res.status(401).json({msg:'User not authorised'});
     }
-    await post.remove();
-    res.json({msg:'The post has been removed'});
+    await confession.remove();
+    res.json({msg:'The confession has been removed'});
   }catch(err){
     console.error(err);
     if(err.kind==='ObjectId')
@@ -96,90 +94,104 @@ router.delete('/:id',auth,async(req,res)=>{
 })
 
 //@access Private
-//@route  PUT /api/posts/like/:id
-//@desc   Like a post
-router.put('/like/:id',auth,async(req,res)=>{
+//@route  PUT /api/confess/like/:id
+//@desc   Like a confession
+router.put('/like/:id',isLoggedIn,async(req,res)=>{
   try{
-    const post=await Post.findById(req.params.id);
-    if(post.likes.filter(like=>like.user.toString()===req.user.id).length>0)
+    const confession=await Confession.findById(req.params.id);
+    if(confession.likes.filter(like=>like.user.toString()===req.user.id).length>0)
     {
       return res.status(500).json({msg:'Post already liked'});
     }
-    post.likes.unshift({user:req.user.id});
-    await post.save();
-    res.json(post.likes);
+    confession.likes.unshift({user:req.user.id});
+    await confession.save();
+    res.json(confession.likes);
   }catch(err){
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 })
 
-//@route   Put /api/posts/unlike/:id
+//@route   Put /api/confess/unlike/:id
 //@access  Private
-//@desc    Unlike a post
-router.put('/unlike/:id',auth,async(req,res)=>{
+//@desc    Unlike a confession
+router.put('/unlike/:id',isLoggedIn,async(req,res)=>{
   try{
-    const post=await Post.findById(req.params.id);
-    if(post.likes.filter(like=>like.user.toString()===req.user.id).length===0)
+    const confession=await Confession.findById(req.params.id);
+    if(confession.likes.filter(like=>like.user.toString()===req.user.id).length===0)
     {
       return res.status(400).json({msg:'The post has not been liked yet'})
     }
-    const removeIndex=post.likes.map(like=>like.user).indexOf(req.user.id);
-    post.likes.splice(removeIndex,1);
-    await post.save();
-    res.json(post.likes);
+    const removeIndex=confession.likes.map(like=>like.user).indexOf(req.user.id);
+    confession.likes.splice(removeIndex,1);
+    await confession.save();
+    res.json(confession.likes);
   }catch(err){
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 })
 
-//@desc   Comment on a post
+//@desc   Comment on a confession
 //@access Private
-//@route  Put /api/posts/comment/:id
-router.put('/comment/:id',[auth,[check('text','Text is required').not().isEmpty()]],async(req,res)=>{
-  const errors=validationResult(req);
-  if(!errors.isEmpty())
-  {
-    return res.status(400).json({errors:errors.array()});
-  }
-  try{
-     const user=await User.findOne({_id:req.user.id});
-     const post=await Post.findById(req.params.id);
-     const newComment={
-       text:req.body.text,
-       name:user.name,
-       avatar:user.avatar,
-       user:req.user.id
-     };
-     post.comments.unshift(newComment);
-     await post.save();
-     res.json(post.comments);
-  }catch(err){
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-})
+//@route  Put /api/confess/comment/:id
+router.post('/comment/:id', [isLoggedIn, [
+    check('text', 'text is required').not().isEmpty()
+  ]], async (req, res) => {
+  
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors)
+      return res.status(400).json({ errors: errors.array() })
+    }
+  
+    try {
+  
+      var user = await User.findById(req.user.id);
+      var confession = await Confession.findById(req.params.id);
+  
+      const newComment = { //
+        text: req.body.text,
+        name: user.name,
+        user: req.user.id
+      }
+      confession.comments.unshift(newComment)
+  
+      await confession.save();
+      res.json(confession.comments);
+  
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send('Server Error');
+  
+    }
+  
+  
+  });
 
 //@desc     Delete comment
-//@route    Delete /api/posts/comment/:id/:comment_id
+//@route    Delete /api/confess/comment/:id/:comment_id
 //@access   Private
-router.delete('/comment/:id/:comment_id',auth,async(req,res)=>{
+router.delete('/comment/:id/:comment_id',isLoggedIn,async(req,res)=>{
   try{
-    const post=await Post.findById(req.params.id);
-    const comment=post.comments.find(comment=>comment.id.toString()===req.params.comment_id);
+    const confession=await Confession.findById(req.params.id);
+    const comment=confession.comments.find(comment=>comment.id.toString()===req.params.comment_id);
     if(comment.user.toString()!==req.user.id)
     {
       return res.status(401).json({msg:'User not authorised'});
     }
-    const removeIndex=post.comments.map(comment=>comment.id).indexOf(req.params.comment_id);
-    post.comments.splice(removeIndex,1);
-    await post.save();
-    res.json(post.comments);
+    const removeIndex=confession.comments.map(comment=>comment.id).indexOf(req.params.comment_id);
+    confession.comments.splice(removeIndex,1);
+    await confession.save();
+    res.json(confession.comments);
   }catch(err){
     console.error(err);
     res.status(500).send('Server Error');
   }
 })
+
+//Route to like a comment on a confession
+
+//Route to unlike a comment on a confession
 
 module.exports=router;

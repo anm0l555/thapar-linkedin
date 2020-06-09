@@ -5,6 +5,7 @@ const cors = require('cors')
 const authRoutes = require('./routes/authroute')
 const profileRoutes= require('./routes/profileroutes')
 const userRoutes= require('./routes/userroutes')
+const confessionRoutes=require('./routes/confessionRoutes');
 const passportSetup=require('./config/passportsetup')
 //Fb passport setup
 const passportSetupFB=require('./config/passportsetupFB');
@@ -33,7 +34,7 @@ app.use(passport.session());
 app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
 app.use('/user',userRoutes);
-// app.use('/confess',confessRoutes);
+app.use('/confess',confessionRoutes);
 
 app.get('/',(req,res)=>{
     res.send('welcome to home page');
