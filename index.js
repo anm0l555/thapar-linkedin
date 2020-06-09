@@ -3,6 +3,8 @@ const connectDB = require('./config/db')
 const passport=require('passport')
 const cors = require('cors')
 const authRoutes = require('./routes/authroute')
+const profileRoutes= require('./routes/profileroutes')
+const userRoutes= require('./routes/userroutes')
 const passportSetup=require('./config/passportsetup')
 const cookieSession= require('cookie-session')
 const app= express();
@@ -27,6 +29,9 @@ app.use(passport.session());
 
 //define routes
 app.use('/auth',authRoutes);
+app.use('/profile',profileRoutes);
+app.use('/user',userRoutes);
+// app.use('/confess',confessRoutes);
 
 app.get('/',(req,res)=>{
     res.send('welcome to home page');

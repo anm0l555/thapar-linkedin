@@ -8,6 +8,10 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:'users'
     },
+    username:{
+        type:String,
+        unique:true
+    },
     bio: {
         type: String
     },

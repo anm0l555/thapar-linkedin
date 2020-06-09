@@ -1,14 +1,8 @@
 const router = require('express').Router();
 const passport = require('passport');
+const isLoggedIn =require('../middleware/authmiddle')
 
 
-const isLoggedIn = (req, res, next) => {
-    if (req.user) {
-        next();
-    } else {
-        res.sendStatus(401);
-    }
-}
 
 router.get('/login',(req,res)=>{
     res.send('login Page')
@@ -20,7 +14,7 @@ router.get('/logout',(req,res)=>{
 })
 
 
-router.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.name}!`))
+router.get('/good', isLoggedIn, (req, res) => res.json(req.user))
 
 
 // auth with google +
