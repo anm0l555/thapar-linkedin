@@ -191,7 +191,57 @@ router.delete('/comment/:id/:comment_id',isLoggedIn,async(req,res)=>{
 })
 
 //Route to like a comment on a confession
+router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
+    try{
+        const confession=await Confession.findById(req.params.id);
+        const comment=confession.comments.find(comment=>comment.id.toString()===req.params.comment_id);
+        if(!confession)
+        {
+            return res.status(404).json({msg:'No post found'});
+        }
+        if(!comment)
+        {
+            return res.status(404).json({msg:'No comment found'});
+        }
+        if(comment.likes.filter(like=>like.user.toString()===req.user.id).length>0)
+        {
+            return res.status(500).json({msg:'Comment already liked'});
+        }
+      comment.likes.unshift({user:req.user.id});
+      await confession.save();
+      res.json(confession.likes);
+    }catch(err){
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  })
 
 //Route to unlike a comment on a confession
+router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
+    try{
+        const confession=await Confession.findById(req.params.id);
+        const comment=confession.comments.find(comment=>comment.id.toString()===req.params.comment_id);
+        if(!confession)
+        {
+            return res.status(404).json({msg:'No post found'});
+        }
+        if(!comment)
+        {
+            return res.status(404).json({msg:'No comment found'});
+        }
+        if(comment.likes.filter(like=>like.user.toString()===req.user.id).length===0)
+        {
+            return res.status(400).json({msg:'The post has not been liked yet'})
+        }
+        const removeIndex=comment.likes.map(like=>like.user).indexOf(req.user.id);
+        comment.likes.splice(removeIndex,1);
+        await confession.save();
+        res.json(confession.likes);
+    }catch(err){
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  })
+
 
 module.exports=router;
