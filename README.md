@@ -18,7 +18,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/DECODE25/nerdy)
 <a> <img src="https://badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot" alt="Dependabot Badge"></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 </div>
@@ -68,6 +68,7 @@ Thanks goes to these wonderful people for helping us with the project! :
   <tr>
     <td align="center"><a href="https://github.com/specter25"><img src="https://avatars1.githubusercontent.com/u/56391382?v=4" width="200px;" alt=""/><br /><sub><b>Ujjwal Agarwal</b></sub></a><br /><a href="#infra-specter25" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/DECODE25/nerdy/commits?author=specter25" title="Tests">⚠️</a> <a href="#projectManagement-specter25" title="Project Management">📆</a> <a href="https://github.com/DECODE25/nerdy/commits?author=specter25" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/notsarthak"><img src="https://avatars0.githubusercontent.com/u/60360840?v=4" width="200px;" alt=""/><br /><sub><b>notsarthak</b></sub></a><br /><a href="https://github.com/DECODE25/nerdy/commits?author=notsarthak" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/pranavvidyarthi7"><img src="https://avatars3.githubusercontent.com/u/55582190?v=4" width="200px;" alt=""/><br /><sub><b>pranavvidyarthi7</b></sub></a><br /><a href="https://github.com/DECODE25/nerdy/commits?author=pranavvidyarthi7" title="Code">💻</a></td>
   </tr>
 </table>
 
