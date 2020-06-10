@@ -32,11 +32,10 @@ router.get('/me',isLoggedIn , async(req,res)=>{
 router.post ('/' , [isLoggedIn ,[
     check('gender' , "Gender is required").not().isEmpty(),
     check('year' , "Year is required").not().isEmpty(),
-    check('gender' , "Gender is required").not().isEmpty(),
 ]], async (req,res)=>{
 
     const errors=validationResult(req);
-    if (!error.isEmpty())
+    if (!errors.isEmpty())
     {
         console.log(errors)
         return res.status(400).json({ errors: errors.array() })
@@ -49,6 +48,7 @@ router.post ('/' , [isLoggedIn ,[
     } = req.body;
 
     const profileFields={};
+    profileFields.user =  req.user._id
     if(username) profileFields.username= username.trim();
     if(bio) profileFields.bio=bio.trim()
     if(gender) profileFields.gender=gender.trim()
@@ -62,10 +62,10 @@ router.post ('/' , [isLoggedIn ,[
     if(status) profileFields.relationship.status=status.trim()
     if(bio) profileFields.relationship.spouse=spouse
 
-
+    console.log(profileFields)
     try {
         let profile = await Profile.findOne({user:req.user._id})
-        
+        console.log(profile)
         if (profile)
         {
             profile= await Profile.findOneAndUpdate(
@@ -75,8 +75,14 @@ router.post ('/' , [isLoggedIn ,[
                 );
                 return res.json(profile);
         }
+
+        profile = await new Profile(profileFields).save();
+        res.json(profile)
+
+
+
     } catch (error) {
-        console.log(err.message)
+        console.log(error.message)
         res.status(600).send('server error');
     }
 
