@@ -6,7 +6,7 @@ const Confession = require('../models/confessionModel');
 
 const router=express.Router();
 
-//@route  Confess /api/confess
+//@route  Post /api/confess
 //@access Private
 //@desc   Create a confession
 router.post('/',[isLoggedIn,[
@@ -209,7 +209,7 @@ router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
         }
       comment.likes.unshift({user:req.user.id});
       await confession.save();
-      res.json(confession.likes);
+      res.json(comment.likes);
     }catch(err){
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -217,7 +217,7 @@ router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
   })
 
 //Route to unlike a comment on a confession
-router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
+router.put('/comment/unlike/:id/:comment_id',isLoggedIn,async(req,res)=>{
     try{
         const confession=await Confession.findById(req.params.id);
         const comment=confession.comments.find(comment=>comment.id.toString()===req.params.comment_id);
@@ -236,7 +236,7 @@ router.put('/comment/like/:id/:comment_id',isLoggedIn,async(req,res)=>{
         const removeIndex=comment.likes.map(like=>like.user).indexOf(req.user.id);
         comment.likes.splice(removeIndex,1);
         await confession.save();
-        res.json(confession.likes);
+        res.json(comment.likes);
     }catch(err){
       console.error(err.message);
       res.status(500).send('Server Error');
