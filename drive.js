@@ -1,7 +1,14 @@
 const { google } = require('googleapis');
 const credentials = require('./credentials.json');
+const fs =require('fs')
+const path = require ('path')
+require('dotenv').config()
+
 const scopes = [
-  'https://www.googleapis.com/auth/drive'
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive.metadata'
 ];
 const auth = new google.auth.JWT(
   credentials.client_email, null,
@@ -27,3 +34,31 @@ const drive = google.drive({ version: "v3", auth });
     });
     console.log(res.data);
   })()
+
+
+var folderId = process.env.FOLDER_ID;
+var fileMetadata = {
+  'name': 'photo.jpg',
+  parents: [folderId]
+
+};
+var media = {
+  mimeType: 'image/png',
+  body: fs.createReadStream(path.join(__dirname, './hello.png'))
+};
+console.log(path.join(__dirname, './Webp.net-resizeimage.png'))
+drive.files.create({
+    auth:auth,
+  resource: fileMetadata,
+  media: media,
+  fields: 'id'
+}, function (err, file) {
+  if (err) {
+    // Handle error
+    console.error(err);
+  } else {
+    console.log('File Id: ', file.id);
+  }
+});
+
+

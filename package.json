@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DECODE25/nerdy#readme",
   "dependencies": {
+    "async": "^3.2.0",
     "config": "^3.3.1",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
