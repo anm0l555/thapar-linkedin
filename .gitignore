@@ -1,3 +1,5 @@
 node_modules
 credential.txt
 .env
+credentials.json
+credentials1.json
