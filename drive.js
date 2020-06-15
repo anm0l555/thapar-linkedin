@@ -3,6 +3,7 @@ const credentials = require('./credentials.json');
 const fs =require('fs')
 const path = require ('path')
 require('dotenv').config()
+const User = require('./models/usermodel')
 
 const scopes = [
     'https://www.googleapis.com/auth/drive.file',
@@ -79,12 +80,19 @@ async function createFolder(name)
   drive.files.create({
     resource: fileMetadata,
     fields: 'id'
-  }, function (err, file) {
+  },async function (err, file) {
     if (err) {
       // Handle error
       console.error(err);
     } else {
-      console.log('Folder Id: ', file);
+      console.log('Folder Id: ', file.data);
+      const user = await  User.findOneAndUpdate(
+        {_id:name},
+        {imgFolder: `${file.data.id}`},
+        {new:true}
+        )
+      console.log(user);
+
     }
   });
 }
