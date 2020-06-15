@@ -4,6 +4,7 @@ const fs =require('fs')
 const path = require ('path')
 require('dotenv').config()
 const User = require('./models/usermodel')
+const Profile= require('./models/profilemodel')
 
 const scopes = [
     'https://www.googleapis.com/auth/drive.file',
@@ -39,17 +40,17 @@ async function listfiles () {
   }
 
 
-async function uploadfile() {
+async function uploadfile(foldername , res , user,profile) {
 
-  var folderId = process.env.FOLDER_ID;
+var folderId = foldername;
 var fileMetadata = {
-  'name': 'photo.jpg',
+  'name': `${profile.images.length()+1}.jpg`,
   parents: [folderId]
 
 };
 var media = {
   mimeType: 'image/png',
-  body: fs.createReadStream(path.join(__dirname, './hello.png'))
+  body: fs.createReadStream(path.join(__dirname,uploads,`./${user._id}_${profile.images.length() +1}.jpg`))
 };
 console.log(path.join(__dirname, './Webp.net-resizeimage.png'))
 drive.files.create({
@@ -57,14 +58,26 @@ drive.files.create({
   resource: fileMetadata,
   media: media,
   fields: 'id'
-}, function (err, file) {
+},async function (err, file) {
   if (err) {
     // Handle error
     console.error(err);
   } else {
+
+    const image ={
+      id :`${file.data.id}`,
+      date :Date.now()
+
+    }
+    profile.images.unshift(image);
+
+    //deleteing the file left 
+
     console.log('File Id: ', file);
   }
 });
+
+
 
 }
 

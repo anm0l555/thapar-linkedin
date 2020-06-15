@@ -46,7 +46,10 @@ const ProfileSchema = new Schema({
 
     images:[
         {
-            address:{ type : String}
+            id:{type : String},
+            link:{ type : String},
+            date:{type:Date , default:Date.now()},
+            caption:{type:String}
         }
     ],
     societies:[
