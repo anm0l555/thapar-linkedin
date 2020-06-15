@@ -1,8 +1,9 @@
-import 'package:app/PageNavigationAnimation/SlideUp.dart';
-import 'package:app/PageResizing/Variables.dart';
-import 'package:app/PageResizing/WidgetResizing.dart';
 import 'package:flutter/material.dart';
+import '../PageResizing/Variables.dart';
+import '../PageResizing/WidgetResizing.dart';
+import '../PageNavigationAnimation/SlideUp.dart';
 import '../TrashedPage.dart';
+import '../UploadPageElements/UploadPageScreen.dart';
 
 class SafeAreaConstraints extends StatelessWidget {
   const SafeAreaConstraints({Key key}) : super(key: key);
@@ -14,13 +15,13 @@ class SafeAreaConstraints extends StatelessWidget {
     boxSizeV = SizeConfig.safeBlockVertical;
     return SafeArea(
       child: Scaffold(
-        body: Login(),
+        body: LoginScreen(),
       ),
     );
   }
 }
 
-class Login extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -118,7 +119,7 @@ class Login extends StatelessWidget {
               b: 62.9,
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).push(slideUp(Login1(
+                Navigator.of(context).push(slideUp(Signup(
                   boxSizeH: boxSizeH,
                   boxSizeV: boxSizeV,
                 )));
@@ -129,7 +130,7 @@ class Login extends StatelessWidget {
               b: 58.3,
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).push(slideUp(Login1(
+                Navigator.of(context).push(slideUp(Signup(
                   boxSizeH: boxSizeH,
                   boxSizeV: boxSizeV,
                 )));
@@ -141,10 +142,8 @@ class Login extends StatelessWidget {
                 onTap: () {
                   print("LOGIN");
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(slideUp(Login1(
-                    boxSizeH: boxSizeH,
-                    boxSizeV: boxSizeV,
-                  )));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => UploadScreen()));
                 },
                 child: Container(
                   height: 8 * boxSizeV,
