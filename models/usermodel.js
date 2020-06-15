@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema(
             unique:true,
             minlength:10,
             maxlength:10
+        },
+        imgFolder:{
+            type:String
         }
     }
 )
