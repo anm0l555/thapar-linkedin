@@ -5,8 +5,10 @@ const cors = require('cors')
 const authRoutes = require('./routes/authroute')
 const profileRoutes= require('./routes/profileroutes')
 const userRoutes= require('./routes/userroutes')
+const uploadRoutes = require('./routes/uplodroutes')
 const confessionRoutes=require('./routes/confessionRoutes');
 const passportSetup=require('./config/passportsetup')
+
 //Fb passport setup
 const passportSetupFB=require('./config/passportsetupFB');
 const cookieSession= require('cookie-session')
@@ -35,6 +37,7 @@ app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
 app.use('/user',userRoutes);
 app.use('/confess',confessionRoutes);
+app.use('/upload',uploadRoutes);
 
 app.get('/',(req,res)=>{
     res.send('welcome to home page');
