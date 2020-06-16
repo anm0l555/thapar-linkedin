@@ -44,15 +44,15 @@ async function uploadfile(foldername , res , user,profile) {
 
 var folderId = foldername;
 var fileMetadata = {
-  'name': `${profile.images.length()+1}.jpg`,
+  'name': `${profile.images.length +1}.jpg`,
   parents: [folderId]
 
 };
 var media = {
   mimeType: 'image/png',
-  body: fs.createReadStream(path.join(__dirname,uploads,`./${user._id}_${profile.images.length() +1}.jpg`))
+  body: fs.createReadStream(path.join(__dirname, './uploads' ,`./${user._id}`))
 };
-console.log(path.join(__dirname, './Webp.net-resizeimage.png'))
+console.log(path.join(__dirname, './uploads' ,`./${user._id}`))
 drive.files.create({
     auth:auth,
   resource: fileMetadata,
@@ -70,6 +70,7 @@ drive.files.create({
 
     }
     profile.images.unshift(image);
+    await profile.save();
 
     //deleteing the file left 
 
