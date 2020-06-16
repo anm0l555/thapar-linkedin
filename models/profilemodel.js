@@ -57,7 +57,13 @@ const ProfileSchema = new Schema({
             name:{ type : String},
             Position:{ type : String},
         }
-    ]
+    ],
+    video:{
+        id:{type : String},
+        link:{ type : Stsring},
+        date:{type:Date , default:Date.now()},
+        caption:{type:String}
+    }
 
 });
 
