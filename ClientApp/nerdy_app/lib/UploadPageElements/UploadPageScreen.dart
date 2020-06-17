@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../LoginPageElements/SignInScreen.dart';
 import '../PageResizing/WidgetResizing.dart';
 import '../PageResizing/Variables.dart';
+import '../ProfilePageElements/ProfilePageScreen.dart';
 
 class UploadScreen extends StatelessWidget {
   const UploadScreen({Key key}) : super(key: key);
@@ -13,7 +14,13 @@ class UploadScreen extends StatelessWidget {
     boxSizeV = SizeConfig.safeBlockVertical;
     return SafeArea(
       child: Scaffold(
-        body: _UploadScreen(),
+        body: WillPopScope(
+            onWillPop: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SafeAreaConstraints()));
+            },
+            child: _UploadScreen()),
       ),
     );
   }
@@ -22,116 +29,105 @@ class UploadScreen extends StatelessWidget {
 class _UploadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => SafeAreaConstraints()));
-      },
-      child: SafeArea(
-        child: Scaffold(
-          body: Container(
+    return Container(
+      padding: EdgeInsets.only(
+        left: 4 * boxSizeH,
+        right: 4 * boxSizeH,
+        top: 4.2 * boxSizeV,
+        bottom: 3.25 * boxSizeV,
+      ),
+      width: boxSizeH * 100,
+      height: boxSizeV * 100,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('images/Upload.png'), fit: BoxFit.fill),
+      ),
+      child: Stack(
+        children: <Widget>[
+          // Container(
+          //   decoration: BoxDecoration(
+          //     color: Colors.transparent,
+          //     border: Border.all(),
+          //   ),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "GOT SOMETHING NEW??\nUPLOAD IT HERE!!!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 6.98 * boxSizeH,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              )
+            ],
+          ),
+          Padding(
             padding: EdgeInsets.only(
-              left: 4 * boxSizeH,
-              right: 4 * boxSizeH,
-              top: 4.2 * boxSizeV,
-              bottom: 3.25 * boxSizeV,
+              top: 16.6 * boxSizeV,
+              left: 3 * boxSizeH,
             ),
-            width: boxSizeH * 100,
-            height: boxSizeV * 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/Upload.png'), fit: BoxFit.fill),
+            child: Text(
+              'Popular',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
             ),
-            child: Stack(
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 20.5 * boxSizeV,
+            ),
+            child: Container(
+              height: 13 * boxSizeV,
+              // color: Colors.red,
+              child: ListView.builder(
+                itemBuilder: (context, index) => LikedImages(),
+                itemCount: 5,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 36.3 * boxSizeV),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: Colors.transparent,
-                //     border: Border.all(),
-                //   ),
-                // ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "GOT SOMETHING NEW??\nUPLOAD IT HERE!!!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 6.98 * boxSizeH,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white),
-                    )
+                    UploadingContainers(
+                      heading: 'Upload a\nPhoto',
+                      description:
+                          'Upload a photo and see similar looking people',
+                    ),
+                    UploadingContainers(
+                      heading: 'Invite a\nDate',
+                      description:
+                          'Upload a photo and see similar looking people',
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 16.6 * boxSizeV,
-                    left: 3 * boxSizeH,
-                  ),
-                  child: Text(
-                    'Popular',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 20.5 * boxSizeV,
-                  ),
-                  child: Container(
-                    height: 13 * boxSizeV,
-                    // color: Colors.red,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) => LikedImages(),
-                      itemCount: 5,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    UploadingContainers(
+                      heading: 'Upload a\nPhoto',
+                      description:
+                          'Upload a photo and see similar looking people',
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 36.3 * boxSizeV),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          UploadingContainers(
-                            heading: 'Upload a\nPhoto',
-                            description:
-                                'Upload a photo and see similar looking people',
-                          ),
-                          UploadingContainers(
-                            heading: 'Invite a\nDate',
-                            description:
-                                'Upload a photo and see similar looking people',
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          UploadingContainers(
-                            heading: 'Upload a\nPhoto',
-                            description:
-                                'Upload a photo and see similar looking people',
-                          ),
-                          UploadingContainers(
-                            heading: 'Invite a\nDate',
-                            description:
-                                'Upload a photo and see similar looking people',
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    UploadingContainers(
+                      heading: 'Invite a\nDate',
+                      description:
+                          'Upload a photo and see similar looking people',
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -201,10 +197,9 @@ class LikedImages extends StatelessWidget {
       //     ),
       child: GestureDetector(
         onTap: () {
-          print("Working");
-          // Navigator.of(context).pop();
-          // Navigator.of(context).push(
-          //     MaterialPageRoute(builder: (context) => ProfilePageScreen()));
+          Navigator.of(context).pop();
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ProfilePageScreen()));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
