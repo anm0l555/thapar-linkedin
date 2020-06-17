@@ -85,7 +85,49 @@ drive.files.create({
 }
 
 
+async function uploadfiledp(foldername , res , user,profile) {
 
+  var folderId = foldername;
+  var fileMetadata = {
+    'name': `${user._id}.jpg`,
+    parents: [folderId]
+  
+  };
+  var media = {
+    mimeType: 'image/png',
+    body: fs.createReadStream(path.join(__dirname, './uploaddp' ,`./${user._id}`))
+  };
+  console.log(path.join(__dirname, './uploaddp' ,`./${user._id}`))
+  drive.files.create({
+      auth:auth,
+    resource: fileMetadata,
+    media: media,
+    fields: 'id'
+  },async function (err, file) {
+    if (err) {
+      // Handle error
+      console.error(err);
+    } else {
+  
+      const image ={
+        id :`${file.data.id}`,
+        date :Date.now()
+      }
+      user.profilePicture=image
+      await user.save();
+  
+      fs.unlinkSync(path.join(__dirname, './uploaddp' ,`./${user._id}`))
+  
+      //deleteing the file left 
+  
+      console.log('File Id: ', file);
+    }
+  });
+  
+  
+  
+  }
+  
 
 
 
@@ -175,4 +217,4 @@ async function createFolder(name)
 // createFolder()
 
 
-module.exports = {listfiles  , uploadfile , createFolder, uploadfilevideo}
+module.exports = {listfiles  , uploadfile , createFolder, uploadfilevideo ,uploadfiledp}
