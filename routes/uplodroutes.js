@@ -5,48 +5,8 @@ const User = require('../models/usermodel')
 const Profile = require('../models/profilemodel')
 const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
-const {listfiles  , uploadfile , createFolder} = require('../drive')
+const {listfiles  , uploadfile , createFolder ,uploadfilevideo} = require('../drive')
 const path=require('path')
-
-// var storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads/')
-//     },
-//     filename: async(req, file, cb) => {
-
-//         const profile= await Profile.findOne({user:req.user._id})
-//         cb(null, `${req.user._id}_${profile.images.length() +1}`)
-//     },
-//     fileFilter: (req, file, cb) => {
-//         const ext = path.extname(file.originalname)
-//         if (ext !== '.jpg' ||ext !== '.png') {
-//             return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
-//         }
-//         cb(null, true)
-//     }
-// })
-// var upload = multer({ storage: storage }).single("file")
-
-
-// router.post('/image' ,isLoggedIn, async(req,res)=>{
-
-
-//     console.log('command here',req.user)
-//         upload(req, res, err => {
-//         if (err) {
-//             console.log(err);
-//             return res.json({ success: false, err })
-//         }
-//         // const user = await User.findOne({_id:req.user._id})
-//         // const Profile = await Profile.findOne({user:user._id})
-//         // uploadfile(user.imgFolder , res , user , profile)
-
-//         return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
-//     })
-
-// })
-
-
 
 
 var storage = multer.diskStorage({   
@@ -62,6 +22,19 @@ var storage = multer.diskStorage({
 
  var upload = multer({ storage: storage }).single("demo_image");
 
+
+ var storage2 = multer.diskStorage({   
+    destination: function(req, file, cb) { 
+       cb(null, './uploadvideo');    
+    }, 
+    filename: async(req, file, cb) => {
+
+        const profile= await Profile.findOne({user:req.user._id})
+        cb(null, `${req.user._id}`)
+    }
+ });
+
+ var uploadvideo = multer({ storage: storage2 }).single("demo_video");
 
 //=================================
 //             User
@@ -86,4 +59,26 @@ router.post("/image", isLoggedIn ,async (req, res) => {
    res.json(profile.images)
 
  });
+
+ router.post("/video", isLoggedIn ,async (req, res) => {
+    console.log("command here")
+    uploadvideo(req, res, async (err) => {
+     if(err) {
+         console.log(err)
+       res.status(400).send("Something went wrong!");
+     }
+
+     console.log("command here2")
+    //  res.send('hello');
+   });
+
+   const user = await User.findOne({_id:req.user._id})
+   const profile = await Profile.findOne({user:user._id})
+   uploadfilevideo('11ECJIBXPTqhQphf4vSE3Jz_Rw5TGKEsS' , res , user , profile)
+   res.json(profile.video)
+
+ });
+
+
+
 module.exports = router
