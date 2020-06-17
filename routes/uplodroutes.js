@@ -5,7 +5,7 @@ const User = require('../models/usermodel')
 const Profile = require('../models/profilemodel')
 const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
-const {listfiles  , uploadfile , createFolder} = require('../drive')
+const {listfiles  , uploadfile , createFolder ,uploadfilevideo} = require('../drive')
 const path=require('path')
 
 
@@ -20,7 +20,7 @@ var storage = multer.diskStorage({
     }
  });
 
- var upload = multer({ storage: storage }).single("demo_video");
+ var upload = multer({ storage: storage }).single("demo_image");
 
 
  var storage2 = multer.diskStorage({   
@@ -34,7 +34,7 @@ var storage = multer.diskStorage({
     }
  });
 
- var uploadvideo = multer({ storage: storage2 }).single("demo_image");
+ var uploadvideo = multer({ storage: storage2 }).single("demo_video");
 
 //=================================
 //             User
@@ -74,7 +74,7 @@ router.post("/image", isLoggedIn ,async (req, res) => {
 
    const user = await User.findOne({_id:req.user._id})
    const profile = await Profile.findOne({user:user._id})
-   uploadfile('11ECJIBXPTqhQphf4vSE3Jz_Rw5TGKEsS' , res , user , profile)
+   uploadfilevideo('11ECJIBXPTqhQphf4vSE3Jz_Rw5TGKEsS' , res , user , profile)
    res.json(profile.video)
 
  });
