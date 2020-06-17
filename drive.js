@@ -72,6 +72,8 @@ drive.files.create({
     profile.images.unshift(image);
     await profile.save();
 
+    fs.unlinkSync(path.join(__dirname, './uploads' ,`./${user._id}`))
+
     //deleteing the file left 
 
     console.log('File Id: ', file);
@@ -119,6 +121,7 @@ async function uploadfilevideo(foldername , res , user,profile) {
       profile.video=video
       await profile.save();
   
+      fs.unlinkSync(path.join(__dirname, './uploadvideo' ,`./${user._id}`))
       //deleteing the file left 
   
       console.log('File Id: ', file);
