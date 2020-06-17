@@ -26,7 +26,13 @@ const userSchema = new mongoose.Schema(
         },
         imgFolder:{
             type:String
+        },
+        profilePicture:{
+            id:{type:String},
+            link:{type:String},
+            date:{type:Date , default :Date.now()}
         }
+
     }
 )
 
