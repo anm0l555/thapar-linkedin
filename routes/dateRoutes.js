@@ -55,6 +55,7 @@ router.post('/', isLoggedIn, async(req,res)=>{
                     }
                 })
             })
+        }
             inSameYear.forEach(person=>{
                 let result=false;
                 p1.forEach(pref=>{
@@ -67,35 +68,20 @@ router.post('/', isLoggedIn, async(req,res)=>{
                 {
                     p2.push({
                         user:person.user,
-                        marked:false
+                        marked:false,
+                        noOfSocietiesCommon:0
                     })
                 }
             })
+
+            var preferences = p1.concat(p2);
+
             new Date({
                 user:req.user.id,
-                firstPreference:p1,
-                secondPreference:p2
+                firstPreference:preferences
             }).save().then((date)=>{
                 res.json(date);
             })
-        }
-        else
-        {
-            p1 = inSameYear.map(person=>{
-                return {
-                    user:person.user,
-                    marked:false,
-                    noOfSocietiesCommon:0
-                }
-            })
-            new Date({
-                user:req.user.id,
-                firstPreference:p1,
-                secondPreference:[]
-            }).save().then((date)=>{
-                res.json(date);
-            })
-        }   
 }) 
 
 module.exports = router;
