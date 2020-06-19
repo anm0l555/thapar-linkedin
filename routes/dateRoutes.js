@@ -94,13 +94,21 @@ router.post('/check' , isLoggedIn , async(req,res)=>{
     const datesdata = await Dates.findOne({user:result.id})
     datesdata.swipedby++;
     await datesdata.save();
+    let ans=false;
 
-        const ans = checkDate(req.user._id,result.id , result.answer)
+
+    if (result.answer)
+    {
+        ans = checkDate(req.user._id,result.id , result.answer)
         if (ans)
         {
-           return res.json({success:true })
+           return res.json({success:ans })
         }
-        
+
+        else{
+            return res.json({success:false})
+        }
+    }
         res.json({success:false})
 
 
