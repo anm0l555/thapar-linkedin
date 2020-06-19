@@ -13,11 +13,15 @@ const router = express.Router();
 router.post('/', isLoggedIn, async(req,res)=>{
     let {year,gender,societies} = await Profile.findOne({user:req.user.id});
     //gender = gender.toLowerCase();
-    if(gender == 'male')
-    {
-        let females = await Profile.find({gender:'female'});
-        const inSameYear = females.filter(female=>{
-            return female.year===year
+    let oppGender;
+    if(gender=='male')
+        oppGender='female';
+    else if(gender=='female')
+        oppGender='male';
+   
+        let persons = await Profile.find({gender:oppGender});
+        const inSameYear = persons.filter(person=>{
+            return person.year===year
         });
         let p1 = [];
         let p2 = [];
@@ -26,7 +30,7 @@ router.post('/', isLoggedIn, async(req,res)=>{
             societies.forEach(society=>{
                 const soci = await Society.findOne({name:society.name});
                 soci.members.forEach(member=>{
-                    if (member.gender=='female' && member.year==year)
+                    if ((member.gender==oppGender) && (member.year==year))
                     {
                         let result = false;
                         if(p1.length!==0)
@@ -51,10 +55,10 @@ router.post('/', isLoggedIn, async(req,res)=>{
                     }
                 })
             })
-            inSameYear.forEach(female=>{
+            inSameYear.forEach(person=>{
                 let result=false;
                 p1.forEach(pref=>{
-                    if(pref.user.toString()==female.user.toString())
+                    if(pref.user.toString()==person.user.toString())
                     {
                         result = true;
                     }
@@ -62,7 +66,7 @@ router.post('/', isLoggedIn, async(req,res)=>{
                 if(!result)
                 {
                     p2.push({
-                        user:female.user,
+                        user:person.user,
                         marked:false
                     })
                 }
@@ -77,9 +81,9 @@ router.post('/', isLoggedIn, async(req,res)=>{
         }
         else
         {
-            p1 = inSameYear.map(female=>{
+            p1 = inSameYear.map(person=>{
                 return {
-                    user:female.user,
+                    user:person.user,
                     marked:false,
                     noOfSocietiesCommon:0
                 }
@@ -91,87 +95,7 @@ router.post('/', isLoggedIn, async(req,res)=>{
             }).save().then((date)=>{
                 res.json(date);
             })
-        }
-    }
-    else
-    {
-        let males = await Profile.find({gender:'male'});
-        const inSameYear = females.filter(male=>{
-            return male.year===year
-        });
-        let p1 = [];
-        let p2 = [];
-        if(societies.length!==0)
-        {
-            societies.forEach(society=>{
-                const soci = await Society.findOne({name:society.name});
-                soci.members.forEach(member=>{
-                    if (member.gender=='male' && member.year==year)
-                    {
-                        let result = false;
-                        if(p1.length!==0)
-                        {
-                            p1.forEach(pref=>{
-                                if(pref.user.toString()==member.user.toString())
-                                {
-                                    pref.noOfSocietiesCommon++;
-                                    result=true;
-                                }
-                            })
-                        }
-                        if(!result)
-                        {
-                            p1.push({
-                                user: member.user,
-                                marked:false,
-                                noOfSocietiesCommon:1
-                            })
-                        }
-                    }
-                })
-            })
-            inSameYear.forEach(male=>{
-                let result=false;
-                p1.forEach(pref=>{
-                    if(pref.user.toString()==male.user.toString())
-                    {
-                        result = true;
-                    }
-                })
-                if(!result)
-                {
-                    p2.push({
-                        user:male.user,
-                        marked:false
-                    })
-                }
-            })
-            new Date({
-                user:req.user.id,
-                firstPreference:p1,
-                secondPreference:p2
-            }).save().then((date)=>{
-                res.json(date);
-            })
-        }
-        else
-        {
-            p1 = inSameYear.map(male=>{
-                return {
-                    user:male.user,
-                    marked:false,
-                    noOfSocietiesCommon:0
-                }
-            })
-            new Date({
-                user:req.user.id,
-                firstPreference:p1,
-                secondPreference:[]
-            }).save().then((date)=>{
-                res.json(date);
-            })
-        }
-    }
+        }   
 }) 
 
 module.exports = router;
