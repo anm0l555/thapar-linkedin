@@ -74,7 +74,11 @@ router.get('/', isLoggedIn, async(req,res)=>{
                 }
             })
 
-            var preferences = p1.concat(p2);
+            let preferences = p1.concat(p2);
+
+            preferences.sort(function(pref1, pref2){
+                return pref2.noOfSocietiesCommon-pref1.noOfSocietiesCommon;
+            })
 
             new Date({
                 user:req.user.id,
