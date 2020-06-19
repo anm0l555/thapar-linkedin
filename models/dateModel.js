@@ -12,14 +12,33 @@ const dateSchema = new Schema({
           ref:'users'
         },
         marked:{
-          type:Boolean
+          type:Boolean,
+          default:false
+
         },
         noOfSocietiesCommon:{
-          type:Number
+          type:Number,
+          default:0
         }
-    }]
+    }],
+
+    readytodate:[Schema.Types.ObjectId],
+    mutualconnection:[Schema.Types.ObjectId],
+
+    swiped:{
+      type:Number,
+      default:0
+    },
+
+    swipedby:{
+      type:Number,
+      default:0
+    }
+
+
 })
 
-const Date = mongoose.model('date',dateSchema);
+const Dates = mongoose.model('date',dateSchema);
 
-module.exports = Date;
+module.exports = Dates;
+;

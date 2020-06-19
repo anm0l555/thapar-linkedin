@@ -1,5 +1,5 @@
 const express = require('express');
-const Date = require('../models/dateModel');
+const Dates = require('../models/dateModel');
 const User = require('../models/userModel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');
@@ -10,7 +10,7 @@ const router = express.Router();
 // POST '/date'
 // PRIVATE
 // posts the array of first and second dating preferences for a user (should run automatically when user logs in for the first time)
-router.post('/', isLoggedIn, async(req,res)=>{
+router.get('/', isLoggedIn, async(req,res)=>{
     let {year,gender,societies} = await Profile.findOne({user:req.user.id});
     //gender = gender.toLowerCase();
     let oppGender;
@@ -83,5 +83,57 @@ router.post('/', isLoggedIn, async(req,res)=>{
                 res.json(date);
             })
 }) 
+
+router.post('/check' , isLoggedIn , async(req,res)=>{
+    const {result} = req.body;
+
+    const userdate= await Dates.findOne({user:req.user._id})
+    userdate.swiped++;
+    await userdate.save();
+
+    const datesdata = await Dates.findOne({user:result.id})
+    datesdata.swipedby++;
+    await datesdata.save();
+
+        const ans = checkDate(req.user._id,result.id , result.answer)
+        if (ans)
+        {
+           return res.json({success:true })
+        }
+        
+        res.json({success:false})
+
+
+})
+
+
+
+
+const checkDate = async (userid , dateid , result) =>{
+
+    //add dateid in the user's ready to date array above
+    //if the user has marked the date yes then
+    const res=false;
+    const userdate= await Dates.findOne({user:userid})
+
+    const datesdata = await Dates.findOne({user:dateid})
+
+    userdate.readytodate.push(dateid);
+    await userdate.save();
+
+    if(datesdata.readytodate.indexOf(userid) !== (-1))
+    {
+        res = true;
+        userdate.mutualconnection.push(dateid);
+        datesdata.mutualconnection.push(userid);
+        await userdate.save();
+        await datesdata.save();
+
+        // send notification
+
+    }
+    return res
+
+}
 
 module.exports = router;
