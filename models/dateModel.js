@@ -17,15 +17,6 @@ const dateSchema = new Schema({
         noOfSocietiesCommon:{
           type:Number
         }
-    }],
-    secondPreference:[{
-        user:{
-          type:Schema.Types.ObjectId,
-          ref:'users'
-        },
-        marked:{
-          type:Boolean
-        }
     }]
 })
 
