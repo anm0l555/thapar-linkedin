@@ -4,6 +4,7 @@ const Profile = require('../models/profilemodel')
 const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
 const {listfiles  , uploadfile , createFolder} = require('../drive')
+const Society = require('../models/SocietiesModel');
 //@route GET api/profile/me
 //@desc GET indivisual Profile
 //@access Private
@@ -57,6 +58,39 @@ router.post ('/' , [isLoggedIn ,[
     if(city) profileFields.city=city.trim()
     if(DoB) profileFields.DoB=DoB
     if (societies) profileFields.societies= societies
+
+    if (societies)
+    {
+      societies.forEach(async(society)=>{
+        var name=society.name;
+        // console.log(name)
+        let soci = await Society.findOne({name})
+
+        if (!soci)
+        {
+          console.log('entered here')
+          soci =new Society({name , members:[]});
+
+          await soci.save();
+          soci = await Society.findOne({name})
+          console.log(soci)
+
+        }
+        // console.log(soci.members.filter(person => person.user === req.user._id ))
+
+        const result = (soci.members.filter(person => person.user.toString() === req.user._id.toString() ).length === 0)
+        // console.log(result)
+        if(result)
+        {
+          
+          const newperson = {user:req.user._id , gender:gender , year:year}
+          soci.members.push(newperson)
+          await soci.save();
+        }
+
+      })
+    }
+
 
     profileFields.relationship={};
     if(status) profileFields.relationship.status=status.trim()
