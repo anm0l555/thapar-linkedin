@@ -7,6 +7,7 @@ const profileRoutes= require('./routes/profileroutes')
 const userRoutes= require('./routes/userroutes')
 const uploadRoutes = require('./routes/uplodroutes')
 const confessionRoutes=require('./routes/confessionRoutes');
+const societyRoutes = require('./routes/societyroutes')
 const passportSetup=require('./config/passportsetup')
 
 //Fb passport setup
@@ -38,6 +39,8 @@ app.use('/profile',profileRoutes);
 app.use('/user',userRoutes);
 app.use('/confess',confessionRoutes);
 app.use('/upload',uploadRoutes);
+app.use('/society',societyRoutes);
+
 
 app.get('/',(req,res)=>{
     res.send('welcome to home page');
