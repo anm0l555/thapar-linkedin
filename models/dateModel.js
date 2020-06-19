@@ -10,12 +10,12 @@ const dateSchema = new Schema({
         user:{
           type:Schema.Types.ObjectId,
           ref:'users'
-        }
-    }],
-    secondPreference:[{
-        user:{
-          type:Schema.Types.ObjectId,
-          ref:'users'
+        },
+        marked:{
+          type:Boolean
+        },
+        noOfSocietiesCommon:{
+          type:Number
         }
     }]
 })
