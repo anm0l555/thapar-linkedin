@@ -1,6 +1,6 @@
 const express = require('express');
 const Dates = require('../models/dateModel');
-const User = require('../models/userModel');
+const User = require('../models/usermodel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');
 const isLoggedIn = require('../middleware/authmiddle');
@@ -8,96 +8,25 @@ const { serializeUser } = require('passport');
 
 const router = express.Router();
 
-// POST '/date'
-// PRIVATE
-// posts the array of first and second dating preferences for a user (should run automatically when user logs in for the first time)
-/*router.post('/', isLoggedIn, async(req,res)=>{
-    let {year,gender,societies} = await Profile.findOne({user:req.user.id});
-    //gender = gender.toLowerCase();
-    let oppGender;
-    if(gender=='male')
-        oppGender='female';
-    else if(gender=='female')
-        oppGender='male';
-   
-        let persons = await Profile.find({gender:oppGender});
-        const inSameYear = persons.filter(person=>{
-            return person.year===year
-        });
-        let p1 = [];
-        let p2 = [];
-        if(societies.length!==0)
-        {
-            societies.forEach(society=>{
-                const soci = await Society.findOne({name:society.name});
-                soci.members.forEach(member=>{
-                    if ((member.gender==oppGender) && (member.year==year))
-                    {
-                        let result = false;
-                        if(p1.length!==0)
-                        {
-                            p1.forEach(pref=>{
-                                if(pref.user.toString()==member.user.toString())
-                                {
-                                    pref.noOfSocietiesCommon++;
-                                    result=true;
-                                    break;
-                                }
-                            })
-                        }
-                        if(!result)
-                        {
-                            p1.push({
-                                user: member.user,
-                                marked:false,
-                                noOfSocietiesCommon:1
-                            })
-                        }
-                    }
-                })
-            })
-        }
-            inSameYear.forEach(person=>{
-                let result=false;
-                p1.forEach(pref=>{
-                    if(pref.user.toString()==person.user.toString())
-                    {
-                        result = true;
-                    }
-                })
-                if(!result)
-                {
-                    p2.push({
-                        user:person.user,
-                        marked:false,
-                        noOfSocietiesCommon:0
-                    })
-                }
-            })
-
-            let preferences = p1.concat(p2);
-
-            preferences.sort(function(pref1, pref2){
-                return pref2.noOfSocietiesCommon-pref1.noOfSocietiesCommon;
-            })
-
-            new Date({
-                user:req.user.id,
-                firstPreference:preferences
-            }).save().then((date)=>{
-                res.json(date);
-            })
-}) */
-
-// PRIVATE 
-// GET '/date/pref'
-// sends top 50 preferences of the currently logged in user
 router.get('/pref', isLoggedIn, async(req,res)=>{
-    const { firstPreference, send } = await Dates.findOne({user: req.user.id});
-    const topFiftyPrefs = firstPreference.slice(send,send+50);
-    send+=50;
-    await Dates.findOne({user:req.user.id},{$set:{send}})
-    res.json(topFiftyPrefs);
+    const user = await Dates.findOne({user: req.user.id});
+
+    if(user.swiped < user.firstPreference.length)
+
+{    const topFiftyPrefs = user.firstPreference.slice(user.send,user.send+50);
+    user.send+=50;
+    await user.save();
+    res.json(topFiftyPrefs);}
+
+    else{
+        res.json({success:false ,  message:"No prefferences left"})
+    }
+})
+
+router.get('/datehistory',isLoggedIn,async (req,res)=>{
+    const date = await Dates.find ({user : req.user._id})
+
+    res.json( date )
 })
 
 router.post('/check' , isLoggedIn , async(req,res)=>{
@@ -105,12 +34,17 @@ router.post('/check' , isLoggedIn , async(req,res)=>{
 
     const userdate= await Dates.findOne({user:req.user._id})
     userdate.swiped++;
+    userdate.notreadytodate.push(result.id)
     await userdate.save();
 
+
     const datesdata = await Dates.findOne({user:result.id})
+    datesdata.tobedated.push(req.user._id)
     datesdata.swipedby++;
     await datesdata.save();
+
     let ans=false;
+
 
 
     if (result.answer)
@@ -125,6 +59,12 @@ router.post('/check' , isLoggedIn , async(req,res)=>{
             return res.json({success:false})
         }
     }
+
+    const userdat= await Dates.findOne({user:req.user._id})
+    userdat.notreadytodate.push(result.id)
+    await userdat.save();
+
+
         res.json({success:false})
 
 

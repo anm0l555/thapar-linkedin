@@ -16,5 +16,15 @@ router.get('/', async (req,res)=>{
     }
 })
 
+router.get('/usernames', async (req,res)=>{
+    const users= await Profile.find()
+    const usernames = users.map((user)=>{
+        return ({
+            [user.username]:user.user
+        })
+    })
+    res.json(usernames)
+})
+
 
 module.exports = router;
