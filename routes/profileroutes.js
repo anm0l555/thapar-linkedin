@@ -5,6 +5,7 @@ const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
 const {listfiles  , uploadfile , createFolder} = require('../drive')
 const Society = require('../models/SocietiesModel');
+const sortPreferences = require('../adminFunctions')
 //@route GET api/profile/me
 //@desc GET indivisual Profile
 //@access Private
@@ -112,6 +113,7 @@ router.post ('/' , [isLoggedIn ,[
 
         profile = await new Profile(profileFields).save();
         createFolder(profile.user)
+        sortPreferences(req);
         res.json(profile)
 
 
