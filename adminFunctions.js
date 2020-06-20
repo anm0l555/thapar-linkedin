@@ -2,9 +2,9 @@ const Dates = require('./models/dateModel');
 const Profile = require('./models/profilemodel');
 const Society = require('./models/SocietiesModel');
 
-/*
-const sortPreferences = async(req)=>{
-    let {year,gender,societies} = await Profile.findOne({user:req.user.id});
+
+const sortPrefCurrentUser = async(id)=>{
+    let {year,gender,societies} = await Profile.findOne({user:id});
     //gender = gender.toLowerCase();
     let oppGender;
     if(gender=='male')
@@ -70,15 +70,27 @@ const sortPreferences = async(req)=>{
     preferences.sort(function(pref1, pref2){
         return pref2.noOfSocietiesCommon-pref1.noOfSocietiesCommon;
     })
-
-    new Dates({
+    return {preferences,oppGender};
+    /*new Dates({
         user:req.user.id,
         firstPreference:preferences
     }).save().then((date)=>{
         res.json(date);
-    })
-}*/
+    })*/
+}
 
+const sortPrefAllOthers = async(year,oppGender) =>{
+    const usersToUpdate = await Profile.find({year, gender:oppGender});
+    usersToUpdate.forEach(userToUpdate=>{
+        const {preferences} = sortPrefCurrentUser(userToUpdate.user);
+
+        const datePrefOfUser = await Dates.findOne({user:userToUpdate.user})
+
+        datePrefOfUser.firstPreference = preferences;
+        await datePrefOfUser.save()
+       
+    })
+}
 
 const sortPreferences = async(req) =>{
     const currentUser = await Profile.findOne({user:req.user.id});
@@ -176,5 +188,6 @@ const sortPreferences = async(req) =>{
 }
 
 module.exports = {
-    sortPreferences
+    sortPrefAllOthers,
+    sortPrefCurrentUser
 }
