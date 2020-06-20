@@ -44,12 +44,6 @@ class _UploadScreen extends StatelessWidget {
       ),
       child: Stack(
         children: <Widget>[
-          // Container(
-          //   decoration: BoxDecoration(
-          //     color: Colors.transparent,
-          //     border: Border.all(),
-          //   ),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -80,7 +74,6 @@ class _UploadScreen extends StatelessWidget {
             ),
             child: Container(
               height: 13 * boxSizeV,
-              // color: Colors.red,
               child: ListView.builder(
                 itemBuilder: (context, index) => LikedImages(),
                 itemCount: 5,
@@ -151,10 +144,6 @@ class UploadingContainers extends StatelessWidget {
             top: 6.6 * boxSizeV,
             bottom: 2 * boxSizeV,
             right: 2 * boxSizeH),
-        // decoration: BoxDecoration(
-        //   color: Colors.transparent,
-        //   border: Border.all(),
-        // ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,10 +180,6 @@ class LikedImages extends StatelessWidget {
       margin: EdgeInsets.only(
           right: (5.23 * boxSizeH) / 2, left: (5 * boxSizeH) / 2),
       height: 10.8 * boxSizeV,
-      // decoration: BoxDecoration(
-      //     // color: Colors.white,
-      //     // border: Border.all(),
-      //     ),
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pop();
