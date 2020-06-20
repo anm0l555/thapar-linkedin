@@ -10,7 +10,7 @@ const router = express.Router();
 // POST '/date'
 // PRIVATE
 // posts the array of first and second dating preferences for a user (should run automatically when user logs in for the first time)
-router.get('/', isLoggedIn, async(req,res)=>{
+/*router.get('/', isLoggedIn, async(req,res)=>{
     let {year,gender,societies} = await Profile.findOne({user:req.user.id});
     //gender = gender.toLowerCase();
     let oppGender;
@@ -74,7 +74,11 @@ router.get('/', isLoggedIn, async(req,res)=>{
                 }
             })
 
-            var preferences = p1.concat(p2);
+            let preferences = p1.concat(p2);
+
+            preferences.sort(function(pref1, pref2){
+                return pref2.noOfSocietiesCommon-pref1.noOfSocietiesCommon;
+            })
 
             new Date({
                 user:req.user.id,
@@ -82,7 +86,7 @@ router.get('/', isLoggedIn, async(req,res)=>{
             }).save().then((date)=>{
                 res.json(date);
             })
-}) 
+}) */
 
 router.post('/check' , isLoggedIn , async(req,res)=>{
     const {result} = req.body;
