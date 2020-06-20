@@ -25,12 +25,20 @@ const dateSchema = new Schema({
       type:Number, 
       default:0
     },
+
     readytodate:[Schema.Types.ObjectId],
+
+    notreadytodate:[Schema.Types.ObjectId],
+
+    tobedated:[Schema.Types.ObjectId],
+
     mutualconnection:[Schema.Types.ObjectId],
+
     swiped:{
       type:Number,
       default:0
     },
+
     swipedby:{
       type:Number,
       default:0

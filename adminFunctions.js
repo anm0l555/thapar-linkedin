@@ -18,20 +18,21 @@ const sortPrefCurrentUser = async(id)=>{
     let p2 = [];
     if(societies.length!==0)
     {
-        societies.forEach(society=>{
+        societies.forEach(async(society)=>{
             const soci = await Society.findOne({name:society.name});
-            soci.members.forEach(member=>{
+            soci.members.forEach(async member=>{
                 if ((member.gender==oppGender) && (member.year==year))
                 {
                     let result = false;
                     if(p1.length!==0)
                     {
-                        p1.forEach(pref=>{
+                        p1.forEach(async pref=>{
                             if(pref.user.toString()==member.user.toString())
                             {
                                 pref.noOfSocietiesCommon++;
                                 result=true;
-                                break;
+                                // break;
+
                             }
                         })
                     }
@@ -47,9 +48,9 @@ const sortPrefCurrentUser = async(id)=>{
             })
         })
     }
-    persons.forEach(person=>{
+    persons.forEach(async person=>{
         let result=false;
-        p1.forEach(pref=>{
+        p1.forEach(async pref=>{
             if(pref.user.toString()==person.user.toString())
             {
                 result = true;
@@ -75,7 +76,7 @@ const sortPrefCurrentUser = async(id)=>{
 
 const sortPrefAllOthers = async(year,oppGender) =>{
     const usersToUpdate = await Profile.find({year, gender:oppGender});
-    usersToUpdate.forEach(userToUpdate=>{
+    usersToUpdate.forEach(async userToUpdate=>{
         const {preferences} = sortPrefCurrentUser(userToUpdate.user);
 
         const datePrefOfUser = await Dates.findOne({user:userToUpdate.user})
