@@ -16,6 +16,12 @@ router.get('/pref', isLoggedIn, async(req,res)=>{
     res.json(topFiftyPrefs);
 })
 
+router.get('/datehistory',isLoggedIn,async (req,res)=>{
+    const date = await Dates.find ({user : req.user._id})
+
+    res.json( date )
+})
+
 router.post('/check' , isLoggedIn , async(req,res)=>{
     const {result} = req.body;
 
