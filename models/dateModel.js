@@ -21,21 +21,20 @@ const dateSchema = new Schema({
           default:0
         }
     }],
-
+    send:{
+      type:Number, 
+      default:0
+    },
     readytodate:[Schema.Types.ObjectId],
     mutualconnection:[Schema.Types.ObjectId],
-
     swiped:{
       type:Number,
       default:0
     },
-
     swipedby:{
       type:Number,
       default:0
     }
-
-
 })
 
 const Dates = mongoose.model('date',dateSchema);

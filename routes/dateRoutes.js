@@ -4,13 +4,14 @@ const User = require('../models/userModel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');
 const isLoggedIn = require('../middleware/authmiddle');
+const { serializeUser } = require('passport');
 
 const router = express.Router();
 
 // POST '/date'
 // PRIVATE
 // posts the array of first and second dating preferences for a user (should run automatically when user logs in for the first time)
-/*router.get('/', isLoggedIn, async(req,res)=>{
+/*router.post('/', isLoggedIn, async(req,res)=>{
     let {year,gender,societies} = await Profile.findOne({user:req.user.id});
     //gender = gender.toLowerCase();
     let oppGender;
@@ -87,6 +88,17 @@ const router = express.Router();
                 res.json(date);
             })
 }) */
+
+// PRIVATE 
+// GET '/date/pref'
+// sends top 50 preferences of the currently logged in user
+router.get('/pref', isLoggedIn, async(req,res)=>{
+    const { firstPreference, send } = await Dates.findOne({user: req.user.id});
+    const topFiftyPrefs = firstPreference.slice(send,send+50);
+    send+=50;
+    await Dates.findOne({user:req.user.id},{$set:{send}})
+    res.json(topFiftyPrefs);
+})
 
 router.post('/check' , isLoggedIn , async(req,res)=>{
     const {result} = req.body;
