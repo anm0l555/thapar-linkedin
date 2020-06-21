@@ -83,6 +83,10 @@ const checkDate = async (userid , dateid , result) =>{
     const datesdata = await Dates.findOne({user:dateid})
 
     userdate.readytodate.push(dateid);
+
+    userdate.firstPreference = userdate.firstPreference.filter(pref => pref.user != dateid)
+
+
     await userdate.save();
 
     if(datesdata.readytodate.indexOf(userid) !== (-1))
