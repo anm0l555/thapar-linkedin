@@ -33,7 +33,6 @@ router.post('/check' , isLoggedIn , async(req,res)=>{
 
     const userdate= await Dates.findOne({user:req.user._id})
     userdate.swiped++;
-    userdate.notreadytodate.push(result.id)
     await userdate.save();
 
 
@@ -67,7 +66,14 @@ router.post('/check' , isLoggedIn , async(req,res)=>{
         res.json({success:false})
 
 
-})
+});
+
+
+router.post('/mutualconnections' , isLoggedIn ,async (req,res)=>{
+
+    const userdate = await Dates.findOne({user:req.user._id});
+    res.json(userdate.mutualconnection)
+} )
 
 
 
@@ -83,8 +89,11 @@ const checkDate = async (userid , dateid , result) =>{
 
     userdate.readytodate.push(dateid);
 
+
+    //remove the right swiped user from the prefference list
     userdate.firstPreference = userdate.firstPreference.filter(pref => pref.user != dateid)
 
+    userdata.send =userdata.send -1; ;
 
     await userdate.save();
 
