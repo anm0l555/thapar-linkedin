@@ -4,7 +4,6 @@ const User = require('../models/usermodel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');
 const isLoggedIn = require('../middleware/authmiddle');
-const { serializeUser } = require('passport');
 
 const router = express.Router();
 
@@ -24,7 +23,7 @@ router.get('/pref', isLoggedIn, async(req,res)=>{
 })
 
 router.get('/datehistory',isLoggedIn,async (req,res)=>{
-    const date = await Dates.find ({user : req.user._id})
+    const date = await Dates.findOne({user : req.user._id})
 
     res.json( date )
 })
