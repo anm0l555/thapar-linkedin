@@ -46,11 +46,12 @@ router.post ('/' , [isLoggedIn ,[
 
     const {
         username ,
-        bio,gender,year , branch , city , DoB , status , spouse , societies
+        bio,gender,year , branch , city , DoB , status , spouse , societies ,music,hobbies,sports,books,cars, shows,dreamDestination
 
     } = req.body;
 
     const profileFields={};
+    let interests={};
     profileFields.user =  req.user._id
     if(username) profileFields.username= username.trim();
     if(bio) profileFields.bio=bio.trim()
@@ -60,6 +61,16 @@ router.post ('/' , [isLoggedIn ,[
     if(city) profileFields.city=city.trim()
     if(DoB) profileFields.DoB=DoB
     if (societies) profileFields.societies= societies
+    if (music) interests.music=music
+    if(hobbies) interests.hobbies=hobbies
+    if(sports) interests.sports=sports
+    if(books) interests.books = books
+    if(cars) interests.cars=cars
+    if (shows) interests.shows=shows
+    if(dreamDestination) interests.dreamDestination=dreamDestination
+
+    if(interests) profileFields.interests=interests
+
 
     if (societies)
     {
