@@ -14,7 +14,7 @@ router.get('/logout',(req,res)=>{
 })
 
 
-router.get('/good', isLoggedIn, (req, res) => res.json(req.user))
+router.get('/good', isLoggedIn, (req, res) => res.json({user:req.user , cookie:req.headers.cookie}))
 
 
 // auth with google +
