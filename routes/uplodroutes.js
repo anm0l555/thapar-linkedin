@@ -7,6 +7,9 @@ const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
 const {listfiles  , uploadfile , createFolder ,uploadfilevideo ,uploadfiledp} = require('../drive')
 const path=require('path')
+const dotenv=require('dotenv');
+
+dotenv.config()
 
 
 var storage = multer.diskStorage({   
@@ -87,7 +90,7 @@ router.post("/image", isLoggedIn ,async (req, res) => {
 
    const user = await User.findOne({_id:req.user._id})
    const profile = await Profile.findOne({user:user._id})
-   uploadfilevideo('11ECJIBXPTqhQphf4vSE3Jz_Rw5TGKEsS' , res , user , profile)
+   uploadfilevideo(process.env.UPLOAD_VIDEO , res , user , profile)
    res.json(profile.video)
 
  });
@@ -107,7 +110,7 @@ router.post("/image", isLoggedIn ,async (req, res) => {
 
 let user = await User.findOne({_id:req.user._id})
  const profile = await Profile.findOne({user:user._id})
- uploadfiledp('1f_BcwXmFxpnc0me4Af4CCg6GR7Fw6D6L' , res , user , profile)
+ uploadfiledp(process.env.UPLOAD_DP , res , user , profile)
 user = await User.findOne({_id:req.user._id})
  res.json(user)
 
