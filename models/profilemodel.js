@@ -32,6 +32,15 @@ const ProfileSchema = new Schema({
     DoB: {
         type: Date
     },
+    interests:{
+        music:[String],
+        hobbies:[String],
+        sports:[String],
+        books:[String],
+        cars:[String],
+        shows:[String],
+        dreamDestination:String
+    },
 
     relationship:{
 
