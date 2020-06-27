@@ -9,6 +9,7 @@ const uploadRoutes = require('./routes/uplodroutes')
 const confessionRoutes=require('./routes/confessionRoutes');
 const dateRoutes = require('./routes/dateRoutes')
 
+const mannualAuthRoutes= require('./routes/mannualauth');
 const societyRoutes = require('./routes/societyroutes')
 const passportSetup=require('./config/passportsetup')
 
@@ -43,6 +44,7 @@ app.use('/confess',confessionRoutes);
 app.use('/upload',uploadRoutes);
 app.use('/society',societyRoutes);
 app.use('/date' ,dateRoutes)
+app.use('/mannualauth' , mannualAuthRoutes);
 
 
 app.get('/',(req,res)=>{

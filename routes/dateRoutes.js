@@ -8,7 +8,7 @@ const isLoggedIn = require('../middleware/authmiddle');
 const router = express.Router();
 
 router.get('/pref', isLoggedIn, async(req,res)=>{
-    const user = await Dates.findOne({user: req.user.id});
+    const user = await Dates.findOne({user: req.user._id});
 
     if(user.swiped < user.firstPreference.length)
 
