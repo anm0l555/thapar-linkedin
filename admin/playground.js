@@ -1,6 +1,6 @@
-const Dates = require('./models/dateModel');
-const Profile = require('./models/profilemodel');
-const Society = require('./models/SocietiesModel');
+const Dates = require('../models/dateModel');
+const Profile = require('../models/profilemodel');
+const Society = require('../models/SocietiesModel');
 
 //finds the preferences for the newly registered user and stores them. Runs for the new user when they register.
 const sortPrefCurrentUser = async(id,years)=>{

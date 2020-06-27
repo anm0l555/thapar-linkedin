@@ -1,10 +1,10 @@
 const { google } = require('googleapis');
-const credentials = require('./credentials.json');
+const credentials = require('../credentials.json');
 const fs =require('fs')
 const path = require ('path')
 require('dotenv').config()
-const User = require('./models/usermodel')
-const Profile= require('./models/profilemodel')
+const User = require('../models/usermodel')
+const Profile= require('../models/profilemodel')
 
 const scopes = [
     'https://www.googleapis.com/auth/drive.file',

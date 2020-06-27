@@ -1,6 +1,6 @@
-const Dates = require('./models/dateModel');
-const Profile = require('./models/profilemodel');
-const Society = require('./models/SocietiesModel');
+const Dates = require('../models/dateModel');
+const Profile = require('../models/profilemodel');
+const Society = require('../models/SocietiesModel');
 
 
 const sortPrefCurrentUser = async(id)=>{

@@ -3,10 +3,10 @@ const User = require('../models/usermodel')
 const Profile = require('../models/profilemodel')
 const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
-const {listfiles  , uploadfile , createFolder} = require('../drive')
+const {listfiles  , uploadfile , createFolder} = require('../admin/drive')
 const Society = require('../models/SocietiesModel');
 const Dates = require('../models/dateModel');
-const {sortPrefAllOthers,sortPrefCurrentUser} = require('../adminFunctions')
+const {sortPrefAllOthers,sortPrefCurrentUser} = require('../admin/adminFunctions')
 //@route GET api/profile/me
 //@desc GET indivisual Profile
 //@access Private
