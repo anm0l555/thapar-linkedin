@@ -5,7 +5,7 @@ const User = require('../models/usermodel')
 const Profile = require('../models/profilemodel')
 const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
-const {listfiles  , uploadfile , createFolder ,uploadfilevideo ,uploadfiledp} = require('../drive')
+const {listfiles  , uploadfile , createFolder ,uploadfilevideo ,uploadfiledp} = require('../admin/drive')
 const path=require('path')
 const dotenv=require('dotenv');
 
