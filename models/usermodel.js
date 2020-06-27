@@ -12,15 +12,20 @@ const userSchema = new mongoose.Schema(
             trim: true,
             minlength: 1
         },
+        password:{
+            type:String,
+            trim:true,
+        },
+
         googleId:{
             type: String,
-            unique: true,
+            // unique: true,
             trim: true,
             minlength: 1
         },
         phone:{
             type:Number,
-            unique:true,
+            // unique:true,
             minlength:10,
             maxlength:10
         },
