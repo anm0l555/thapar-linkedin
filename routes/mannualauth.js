@@ -10,9 +10,6 @@ dotenv.config()
 
 
 
-
-
-
 //@route  GET api/auth/
 //@desc   Test route
 //@access Public
@@ -106,7 +103,7 @@ router.post(
 //register
 
 router.post(
-    '/',
+    '/create',
     [
       check('name', 'Name is required')
         .not()
@@ -157,7 +154,7 @@ router.post(
   
   
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
         res.status(500).send('server error');
       }
   
