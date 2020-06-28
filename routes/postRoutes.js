@@ -2,7 +2,7 @@ const express=require('express');
 const {check,validationResult}=require('express-validator');
 const isLoggedIn = require('../middleware/authmiddle')
 const User = require('../models/usermodel')
-const Confession = require('../models/confessionModel');
+const Confession = require('../models/postModel');
 
 const router=express.Router();
 

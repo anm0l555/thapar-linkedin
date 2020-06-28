@@ -5,7 +5,7 @@ const isLoggedIn = require('../middleware/authmiddle')
 const {check,validationResult} = require('express-validator')
 const {listfiles  , uploadfile , createFolder} = require('../admin/drive')
 const Society = require('../models/SocietiesModel');
-const Dates = require('../models/dateModel');
+const Dates = require('../models/jobModel');
 const {sortPrefAllOthers,sortPrefCurrentUser} = require('../admin/adminFunctions')
 //@route GET api/profile/me
 //@desc GET indivisual Profile

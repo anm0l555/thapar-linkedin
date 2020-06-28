@@ -19,6 +19,9 @@ const dateSchema = new Schema({
         noOfSocietiesCommon:{
           type:Number,
           default:0
+        },
+        year:{
+          type:Number
         }
     }],
     send:{
