@@ -6,7 +6,8 @@ const {check,validationResult} = require('express-validator')
 const {listfiles  , uploadfile , createFolder} = require('../admin/drive')
 const Society = require('../models/SocietiesModel');
 const Dates = require('../models/jobModel');
-const {sortPrefAllOthers,sortPrefCurrentUser} = require('../admin/adminFunctions')
+//const {sortPrefAllOthers,sortPrefCurrentUser} = require('../admin/adminFunctions')
+const {sortPrefAllOthers,sortPrefCurrentUser} = require('../admin/playground')
 //@route GET api/profile/me
 //@desc GET indivisual Profile
 //@access Private
@@ -125,15 +126,39 @@ router.post ('/' , [isLoggedIn ,[
 
         profile = await new Profile(profileFields).save();
         createFolder(profile.user)
+
+        if(year==1)
+        {
+          const years= [1,2,3,4];
+          await sortPrefCurrentUser(req.user.id,years);
+        }
+        else if (year==2)
+        {
+          const years= [2,1,3,4];
+          await sortPrefCurrentUser(req.user.id,years);
+        }
+        else if(year==3)
+        {
+          const years= [3,2,4,1];
+          await sortPrefCurrentUser(req.user.id,years);
+        }
+        else if(year==4)
+        {
+          const years= [4,3,2,1];
+          await sortPrefCurrentUser(req.user.id,years);
+        }
         
-        const {preferences, oppGender}=sortPrefCurrentUser(req.user.id);
+        let oppgender = profileFields.gender == 'male' ? 'female' : 'male';
+
+        await sortPrefAllOthers(req.user.id, year, oppgender)
+        //const {preferences, oppGender}=sortPrefCurrentUser(req.user.id);
         
-        await new Dates({
+        /*await new Dates({
           user:req.user.id,
           firstPreference:preferences
         }).save();
 
-        sortPrefAllOthers(profileFields.year,oppGender);
+        sortPrefAllOthers(profileFields.year,oppGender);*/
 
         res.json(profile)
 
