@@ -160,11 +160,16 @@ router.post(
   
     }
   );
-  
 
-
-
-
+//@route  PUT api/auth/
+//@desc   route to upload the phone number of the user
+//@access PRIVATE
+router.put('/',isLoggedIn,async(req,res)=>{
+  const user = await User.findById(req.user._id).select('-password');
+  user.phone = req.body.phone;
+  await user.save();
+  res.json(user);
+})
 
 
 
