@@ -1,4 +1,4 @@
-const Dates = require('../models/dateModel');
+const Dates = require('../models/jobModel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');
 

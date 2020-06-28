@@ -1,5 +1,5 @@
 const express = require('express');
-const Dates = require('../models/dateModel');
+const Dates = require('../models/jobModel');
 const User = require('../models/usermodel');
 const Profile = require('../models/profilemodel');
 const Society = require('../models/SocietiesModel');

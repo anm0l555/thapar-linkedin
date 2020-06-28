@@ -6,8 +6,8 @@ const authRoutes = require('./routes/authroute')
 const profileRoutes= require('./routes/profileroutes')
 const userRoutes= require('./routes/userroutes')
 const uploadRoutes = require('./routes/uplodroutes')
-const confessionRoutes=require('./routes/confessionRoutes');
-const dateRoutes = require('./routes/dateRoutes')
+const postRoutes=require('./routes/postRoutes');
+const jobRoutes = require('./routes/jobRoutes')
 
 const mannualAuthRoutes= require('./routes/mannualauth');
 const societyRoutes = require('./routes/societyroutes')
@@ -40,10 +40,10 @@ app.use(passport.session());
 app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
 app.use('/user',userRoutes);
-app.use('/confess',confessionRoutes);
+app.use('/confess',postRoutes);
 app.use('/upload',uploadRoutes);
 app.use('/society',societyRoutes);
-app.use('/date' ,dateRoutes)
+app.use('/job' ,jobRoutes)
 app.use('/mannualauth' , mannualAuthRoutes);
 
 
