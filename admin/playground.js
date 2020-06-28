@@ -47,7 +47,8 @@ const sortPrefCurrentUser = async(id,years)=>{
                         p1.push({
                             user: member.user,
                             marked:false,
-                            noOfSocietiesCommon:1
+                            noOfSocietiesCommon:1,
+                            year:member.year
                         })
                     }
                 }
@@ -67,7 +68,8 @@ const sortPrefCurrentUser = async(id,years)=>{
             p2.push({
                 user:person.user,
                 marked:false,
-                noOfSocietiesCommon:0
+                noOfSocietiesCommon:0,
+                year:person.year
             })
         }
     })

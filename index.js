@@ -40,7 +40,7 @@ app.use(passport.session());
 app.use('/auth',authRoutes);
 app.use('/profile',profileRoutes);
 app.use('/user',userRoutes);
-app.use('/confess',postRoutes);
+app.use('/post',postRoutes);
 app.use('/upload',uploadRoutes);
 app.use('/society',societyRoutes);
 app.use('/job' ,jobRoutes)
